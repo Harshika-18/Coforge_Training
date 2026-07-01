@@ -1,0 +1,203 @@
+mysql> create database School;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use school;
+Database changed
+mysql> create table students (studentid int PRIMARY KEY, name varchar(50), age integer, gender varchar(10), city varchar(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe students;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| studentid | int         | NO   | PRI | NULL    |       |
+| name      | varchar(50) | YES  |     | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
+| gender    | varchar(10) | YES  |     | NULL    |       |
+| city      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into students values (101, Rahul, 20, Male, Hyderabad);
+ERROR 1054 (42S22): Unknown column 'Rahul' in 'field list'
+mysql> insert into students values (101, 'Rahul', 20, 'Male', 'Hyderabad');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (102, 'Priya', 19, 'Female', 'Chennai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (103, 'Arjun', 21, 'Male', 'Bengaluru');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (104, 'Sneha', 20, 'Female', 'Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (105, 'Kiran', 22, 'Male', 'Pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from students;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       102 | Priya |   19 | Female | Chennai   |
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       104 | Sneha |   20 | Female | Mumbai    |
+|       105 | Kiran |   22 | Male   | Pune      |
++-----------+-------+------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select name, city from students;
++-------+-----------+
+| name  | city      |
++-------+-----------+
+| Rahul | Hyderabad |
+| Priya | Chennai   |
+| Arjun | Bengaluru |
+| Sneha | Mumbai    |
+| Kiran | Pune      |
++-------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students where age > 20;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       105 | Kiran |   22 | Male   | Pune      |
++-----------+-------+------+--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from students where gender = 'Female';
++-----------+-------+------+--------+---------+
+| studentid | name  | age  | gender | city    |
++-----------+-------+------+--------+---------+
+|       102 | Priya |   19 | Female | Chennai |
+|       104 | Sneha |   20 | Female | Mumbai  |
++-----------+-------+------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from students where city='Hyderabad';
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Hyderabad |
++-----------+-------+------+--------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from students order by name asc;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       105 | Kiran |   22 | Male   | Pune      |
+|       102 | Priya |   19 | Female | Chennai   |
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       104 | Sneha |   20 | Female | Mumbai    |
++-----------+-------+------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students order by age desc;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       105 | Kiran |   22 | Male   | Pune      |
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       104 | Sneha |   20 | Female | Mumbai    |
+|       102 | Priya |   19 | Female | Chennai   |
++-----------+-------+------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students order by city, name;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       102 | Priya |   19 | Female | Chennai   |
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       104 | Sneha |   20 | Female | Mumbai    |
+|       105 | Kiran |   22 | Male   | Pune      |
++-----------+-------+------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students where age between 19 and 21;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       102 | Priya |   19 | Female | Chennai   |
+|       103 | Arjun |   21 | Male   | Bengaluru |
+|       104 | Sneha |   20 | Female | Mumbai    |
++-----------+-------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from students where name like 'r%';
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Hyderabad |
++-----------+-------+------+--------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from students where city like '%i';
++-----------+-------+------+--------+---------+
+| studentid | name  | age  | gender | city    |
++-----------+-------+------+--------+---------+
+|       102 | Priya |   19 | Female | Chennai |
+|       104 | Sneha |   20 | Female | Mumbai  |
++-----------+-------+------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from students where age=20 or age=22;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Hyderabad |
+|       104 | Sneha |   20 | Female | Mumbai    |
+|       105 | Kiran |   22 | Male   | Pune      |
++-----------+-------+------+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update students set city='Delhi' where name='Rahul';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set age=age+1 where name='Arjun';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update students set city='Kolkata' where name='Sneha';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Delhi     |
+|       102 | Priya |   19 | Female | Chennai   |
+|       103 | Arjun |   22 | Male   | Bengaluru |
+|       104 | Sneha |   20 | Female | Kolkata   |
+|       105 | Kiran |   22 | Male   | Pune      |
++-----------+-------+------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> delete from students where studentid=105
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from students where city='Chennai';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from students;
++-----------+-------+------+--------+-----------+
+| studentid | name  | age  | gender | city      |
++-----------+-------+------+--------+-----------+
+|       101 | Rahul |   20 | Male   | Delhi     |
+|       103 | Arjun |   22 | Male   | Bengaluru |
+|       104 | Sneha |   20 | Female | Kolkata   |
++-----------+-------+------+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,415 @@
+day 1 class work
+
+
+mysql> create database db
+    ->
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use db;
+Database changed
+
+mysql> create table tbl_employee (eid integer, ename varchar(20), esalary integer);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into tbl_employee values( 101, 'harshika',15000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tbl_employee values( 102, 'satvika',20000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
++------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select eid,esalary from tbl_employee;
++------+---------+
+| eid  | esalary |
++------+---------+
+|  101 |   15000 |
+|  102 |   20000 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into tbl_employee values( 103, NULL ,30000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
++------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into tbl_employee ( eid, esalary) values (104,25000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
+|  104 | NULL     |   25000 |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid=101;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
++------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid!=101;
++------+---------+---------+
+| eid  | ename   | esalary |
++------+---------+---------+
+|  102 | satvika |   20000 |
+|  103 | NULL    |   30000 |
+|  104 | NULL    |   25000 |
++------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid<>101;
++------+---------+---------+
+| eid  | ename   | esalary |
++------+---------+---------+
+|  102 | satvika |   20000 |
+|  103 | NULL    |   30000 |
+|  104 | NULL    |   25000 |
++------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select ename from tbl_employee where esalary<30000;
++----------+
+| ename    |
++----------+
+| harshika |
+| satvika  |
+| NULL     |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> select eid, esalary from tbl_employee where ename is null;
++------+---------+
+| eid  | esalary |
++------+---------+
+|  103 |   30000 |
+|  104 |   25000 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select eid, esalary from tbl_employee where ename is not null;
++------+---------+
+| eid  | esalary |
++------+---------+
+|  101 |   15000 |
+|  102 |   20000 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid in (101,103);
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  103 | NULL     |   30000 |
++------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid not in (101,103);
++------+---------+---------+
+| eid  | ename   | esalary |
++------+---------+---------+
+|  102 | satvika |   20000 |
+|  104 | NULL    |   25000 |
++------+---------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid between 101 and 103;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
++------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid in (101,105);
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
++------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid between 101 and 105;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
+|  104 | NULL     |   25000 |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where eid between 105 and 101;
+Empty set (0.00 sec)
+
+mysql> select * from tbl_employee where eid not between 105 and 101;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
+|  104 | NULL     |   25000 |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where ename like 's%';
++------+---------+---------+
+| eid  | ename   | esalary |
++------+---------+---------+
+|  102 | satvika |   20000 |
++------+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from tbl_employee where ename like '_a%';
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
++------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where ename like '%a%';
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |   15000 |
+|  102 | satvika  |   20000 |
++------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee where ename like '%y%';
+Empty set (0.00 sec)
+
+mysql> select * from tbl_employee where ename not like '%a%';
+Empty set (0.00 sec)
+
+mysql> update tbl_employee set esalary=0 where eid=101;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |       0 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
+|  104 | NULL     |   25000 |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |       0 |
+|  102 | satvika  |   20000 |
+|  103 | NULL     |   30000 |
+|  104 | NULL     |   25000 |
++------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> delete from tbl_employee where ename is null;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+
+| eid  | ename    | esalary |
++------+----------+---------+
+|  101 | harshika |       0 |
+|  102 | satvika  |   20000 |
++------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select 'harshika' from tbl_employee;
++----------+
+| harshika |
++----------+
+| harshika |
+| harshika |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select 'harshika',5000+500 from tbl_employee;
++----------+----------+
+| harshika | 5000+500 |
++----------+----------+
+| harshika |     5500 |
+| harshika |     5500 |
++----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select 'harshika',5000+500 from tbl_employee;
++----------+----------+
+| harshika | 5000+500 |
++----------+----------+
+| harshika |     5500 |
+| harshika |     5500 |
++----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select eid,'harshika',5000+500 from tbl_employee;
++------+----------+----------+
+| eid  | harshika | 5000+500 |
++------+----------+----------+
+|  101 | harshika |     5500 |
+|  102 | harshika |     5500 |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select eid,sysdate(),'harshika',5000+500 from tbl_employee;
++------+---------------------+----------+----------+
+| eid  | sysdate()           | harshika | 5000+500 |
++------+---------------------+----------+----------+
+|  101 | 2026-07-01 14:40:42 | harshika |     5500 |
+|  102 | 2026-07-01 14:40:42 | harshika |     5500 |
++------+---------------------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select eid as 'employee id',sysdate(),'harshika',5000+500 from tbl_employee;
++-------------+---------------------+----------+----------+
+| employee id | sysdate()           | harshika | 5000+500 |
++-------------+---------------------+----------+----------+
+|         101 | 2026-07-01 14:42:45 | harshika |     5500 |
+|         102 | 2026-07-01 14:42:45 | harshika |     5500 |
++-------------+---------------------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select eid as 'Employee id',sysdate() as 'Current Date','harshika',5000+500 from tbl_employee;
++-------------+---------------------+----------+----------+
+| Employee id | Current Date        | harshika | 5000+500 |
++-------------+---------------------+----------+----------+
+|         101 | 2026-07-01 14:44:44 | harshika |     5500 |
+|         102 | 2026-07-01 14:44:44 | harshika |     5500 |
++-------------+---------------------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select eid 'Employee id',sysdate() 'Current Date','harshika',5000+500 from tbl_employee;
++-------------+---------------------+----------+----------+
+| Employee id | Current Date        | harshika | 5000+500 |
++-------------+---------------------+----------+----------+
+|         101 | 2026-07-01 14:48:10 | harshika |     5500 |
+|         102 | 2026-07-01 14:48:10 | harshika |     5500 |
++-------------+---------------------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> alter tbl_employee add (dno integer);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tbl_employee add (dno integer)' at line 1
+mysql> alter table tbl_employee add (dno integer);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
+| dno     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+------+
+| eid  | ename    | esalary | dno  |
++------+----------+---------+------+
+|  101 | harshika |       0 | NULL |
+|  102 | satvika  |   20000 | NULL |
++------+----------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> alter table tbl_employee add (dsalary integer);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table tbl_employee drop dsalary;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from tbl_employee;
++------+----------+---------+------+
+| eid  | ename    | esalary | dno  |
++------+----------+---------+------+
+|  101 | harshika |       0 | NULL |
+|  102 | satvika  |   20000 | NULL |
++------+----------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> alter table tbl_employee rename column eid to empid;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| empid   | int         | YES  |     | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
+| dno     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> truncate table tbl_employee;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from tbl_employee;
+Empty set (0.00 sec)
+
+mysql> rename table tbl_employee to tbl_employee1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from tbl_employee;
+ERROR 1146 (42S02): Table 'db.tbl_employee' doesn't exist
+mysql> drop table tbl_employee1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe tbl_employee1;
+ERROR 1146 (42S02): Table 'db.tbl_employee1' doesn't exist
+mysql>
