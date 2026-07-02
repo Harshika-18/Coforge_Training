@@ -1,0 +1,586 @@
+mysql> use db;
+Database changed
+mysql> create table tbl_employee (eid integer, ename varchar(50), esalary integer, dno integer);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(50) | YES  |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
+| dno     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into tbl_employee values (101, harshika, 1000, 10);
+ERROR 1054 (42S22): Unknown column 'harshika' in 'field list'
+mysql> insert into tbl_employee values (101, 'harshika', 1000, 10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tbl_employee values (102, 'satvika', 1500, 20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into tbl_employee values (103, 'neha', 2000, 10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into tbl_employee values (104, 'aniketh', 2500, 20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from tbl_employee;
++------+----------+---------+------+
+| eid  | ename    | esalary | dno  |
++------+----------+---------+------+
+|  101 | harshika |    1000 |   10 |
+|  102 | satvika  |    1500 |   20 |
+|  103 | neha     |    2000 |   10 |
+|  104 | aniketh  |    2500 |   20 |
++------+----------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select dno, count(*) from tbl_employee group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|   10 |        2 |
+|   20 |        2 |
++------+----------+
+2 rows in set (0.01 sec)
+
+mysql> select dno, count(*) as 'total no. of employees' from tbl_employee group by dno;
++------+------------------------+
+| dno  | total no. of employees |
++------+------------------------+
+|   10 |                      2 |
+|   20 |                      2 |
++------+------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select dno, sum(esalary), avg(esalary), min(esalary), max(esalary) from tbl_employee group by dno;
++------+--------------+--------------+--------------+--------------+
+| dno  | sum(esalary) | avg(esalary) | min(esalary) | max(esalary) |
++------+--------------+--------------+--------------+--------------+
+|   10 |         3000 |    1500.0000 |         1000 |         2000 |
+|   20 |         4000 |    2000.0000 |         1500 |         2500 |
++------+--------------+--------------+--------------+--------------+
+2 rows in set (0.01 sec)
+
+mysql> select dno, sum(esalary), avg(esalary), min(esalary), max(esalary) from tbl_employee group by dno having min(esalary)>1000;
++------+--------------+--------------+--------------+--------------+
+| dno  | sum(esalary) | avg(esalary) | min(esalary) | max(esalary) |
++------+--------------+--------------+--------------+--------------+
+|   20 |         4000 |    2000.0000 |         1500 |         2500 |
++------+--------------+--------------+--------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select dno, sum(esalary), avg(esalary), min(esalary), max(esalary) from tbl_employee group by dno order by dno;
++------+--------------+--------------+--------------+--------------+
+| dno  | sum(esalary) | avg(esalary) | min(esalary) | max(esalary) |
++------+--------------+--------------+--------------+--------------+
+|   10 |         3000 |    1500.0000 |         1000 |         2000 |
+|   20 |         4000 |    2000.0000 |         1500 |         2500 |
++------+--------------+--------------+--------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select dno, sum(esalary), avg(esalary), min(esalary), max(esalary) from tbl_employee group by dno order by dno desc;
++------+--------------+--------------+--------------+--------------+
+| dno  | sum(esalary) | avg(esalary) | min(esalary) | max(esalary) |
++------+--------------+--------------+--------------+--------------+
+|   20 |         4000 |    2000.0000 |         1500 |         2500 |
+|   10 |         3000 |    1500.0000 |         1000 |         2000 |
++------+--------------+--------------+--------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee order by eid;
++------+----------+---------+------+
+| eid  | ename    | esalary | dno  |
++------+----------+---------+------+
+|  101 | harshika |    1000 |   10 |
+|  102 | satvika  |    1500 |   20 |
+|  103 | neha     |    2000 |   10 |
+|  104 | aniketh  |    2500 |   20 |
++------+----------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tbl_employee order by eid desc;
++------+----------+---------+------+
+| eid  | ename    | esalary | dno  |
++------+----------+---------+------+
+|  104 | aniketh  |    2500 |   20 |
+|  103 | neha     |    2000 |   10 |
+|  102 | satvika  |    1500 |   20 |
+|  101 | harshika |    1000 |   10 |
++------+----------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> create table tbl_department (dno integer, dname varchar(50));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> describe tbl_department;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| dno   | int         | YES  |     | NULL    |       |
+| dname | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into tbl_department values
+    -> (10,'development'),
+    -> (20, 'Testing');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from tbl_department;
++------+-------------+
+| dno  | dname       |
++------+-------------+
+|   10 | development |
+|   20 | Testing     |
++------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select dname from tbl_department where dno=(select dno from tbl_employee where eid=101);
++-------------+
+| dname       |
++-------------+
+| development |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from tbl_employee where dno=(select dno from tbl_department where dname='Testing');
++------+---------+---------+------+
+| eid  | ename   | esalary | dno  |
++------+---------+---------+------+
+|  102 | satvika |    1500 |   20 |
+|  104 | aniketh |    2500 |   20 |
++------+---------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select dname from tbl_department where dno=(select dno from tbl_employee where ename='Harshika');
++-------------+
+| dname       |
++-------------+
+| development |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select dname from tbl_department where dno=(select dno from tbl_employee where eid=101 or eid=102);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select dname from tbl_department where dno in (select dno from tbl_employee where eid=101 or eid=102);
++-------------+
+| dname       |
++-------------+
+| development |
+| Testing     |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> drop table tbl_employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table tbl_employee (eid integer primary key, ename varchar(50) not null, esalary integer check(esalary>0), email varchar(20) unique, dno integer);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into tbl_employee values
+    -> (101, 'harshika', 1000, harsh@gmail.com, 10),
+    -> (101, 'Satvika', 2000, harsh@gmail.com,20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gmail.com, 10),
+(101, 'Satvika', 2000, harsh@gmail.com,20)' at line 2
+mysql> insert into tbl_employee values
+    -> (101, 'harshika', 1000, 'harsh@gmail.com', 10),
+    -> (101, 'Satvika', 2000, 'harsh@gmail.com',20);
+ERROR 1062 (23000): Duplicate entry '101' for key 'tbl_employee.PRIMARY'
+mysql> insert into tbl_employee values
+    -> (101, 'harshika', 1000, harsh@gmail.com, 10),
+    -> (102, 'Satvika', 2000, harsh@gmail.com,20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gmail.com, 10),
+(102, 'Satvika', 2000, harsh@gmail.com,20)' at line 2
+mysql> insert into tbl_employee values
+    -> (101, 'harshika', 1000, 'harsh@gmail.com', 10),
+    -> (102, 'Satvika', 2000, 'harsh@gmail.com',20);
+ERROR 1062 (23000): Duplicate entry 'harsh@gmail.com' for key 'tbl_employee.email'
+mysql> drop table tbl_department;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table tbl_employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into tbl_department values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table tbl_department (dno integer primary key, dname varchar(50));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table tbl_employee (eid integer primary key, ename varchar(50) not null, esalary integer check(esalary>0), email varchar(20) unique, dno integer references tbl_department(dno));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe tbl_department;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| dno   | int         | NO   | PRI | NULL    |       |
+| dname | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | NO   | PRI | NULL    |       |
+| ename   | varchar(50) | NO   |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
+| email   | varchar(20) | YES  | UNI | NULL    |       |
+| dno     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into tbl_employee values (101,'Ramesh',2000,'exp@exp.com',10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from tbl_employee;
++-----+--------+---------+-------------+------+
+| eid | ename  | esalary | email       | dno  |
++-----+--------+---------+-------------+------+
+| 101 | Ramesh |    2000 | exp@exp.com |   10 |
++-----+--------+---------+-------------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from tbl_department;
+Empty set (0.00 sec)
+
+mysql> drop table tbl_employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table tbl_department;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table tbl_employee (eid integer primary key, ename varchar(50) not null, esalary integer check(esalary>0), email varchar(20) unique, dno integer, constraint fk foreign key (dno) references tbl_department(dno));
+ERROR 1824 (HY000): Failed to open the referenced table 'tbl_department'
+mysql> create table tbl_department (dno integer primary key, dname varchar(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table tbl_employee (eid integer primary key, ename varchar(50) not null, esalary integer check(esalary>0), email varchar(20) unique, dno integer, constraint fk foreign key (dno) references tbl_department(dno));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into tbl_employee values (101,'Ramesh',2000,'exp@exp.com',10);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db`.`tbl_employee`, CONSTRAINT `fk` FOREIGN KEY (`dno`) REFERENCES `tbl_department` (`dno`))
+mysql> describe tbl_employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | NO   | PRI | NULL    |       |
+| ename   | varchar(50) | NO   |     | NULL    |       |
+| esalary | int         | YES  |     | NULL    |       |
+| email   | varchar(20) | YES  | UNI | NULL    |       |
+| dno     | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> describe tbl_department;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| dno   | int         | NO   | PRI | NULL    |       |
+| dname | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> DELIMITER //
+mysql>
+mysql> CREATE PROCEDURE insertEmployee(
+    ->     IN eid INT,
+    ->     IN ename VARCHAR(20),
+    ->     IN esalary INT,
+    ->     IN dno INT
+    -> )
+    -> BEGIN
+    ->     INSERT INTO tbl_employee(eid, ename, esalary, dno)
+    ->     VALUES (eid, ename, esalary, dno);
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> insert into tbl_department values (10, 'Development'), (20, 'testing');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> call insertEmployee(102,"Valan",3000,10)
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tbl_employee;
++-----+-------+---------+-------+------+
+| eid | ename | esalary | email | dno  |
++-----+-------+---------+-------+------+
+| 102 | Valan |    3000 | NULL  |   10 |
++-----+-------+---------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> drop procedure insertEmployee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER //
+mysql> create procedure getEmployeeName(
+    -> in empid integer,
+    -> out empname varchar(20)
+    -> )
+    -> begin
+    -> select ename into empname from tbl_employee where eid=empid;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER;
+    -> end //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELIMITER;end' at line 1
+mysql>
+mysql> Delimiter ;
+mysql> call getEmployeeName(101, @empname);
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> select @empname;
++----------+
+| @empname |
++----------+
+| NULL     |
++----------+
+1 row in set (0.00 sec)
+
+mysql> call getEmployeeName(102, @empname);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @empname;
++----------+
+| @empname |
++----------+
+| Valan    |
++----------+
+1 row in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> create function getEmpName(in empid integer) return varchar
+    -> begin
+    -> declare empname varchar(20);
+    -> select ename into empname from tbl_employee where eid=empid;
+    -> return empname;
+    -> end //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in empid integer) return varchar
+begin
+declare empname varchar(20);
+select ename' at line 1
+mysql> DELIMITER //
+mysql>
+mysql> CREATE FUNCTION getEmpName(empid INT)
+    -> RETURNS VARCHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE empname VARCHAR(20);
+    ->     SELECT ename INTO empname
+    ->     FROM tbl_employee
+    ->     WHERE eid = empid;
+    ->     RETURN empname;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> select getEmpName(102);
++-----------------+
+| getEmpName(102) |
++-----------------+
+| Valan           |
++-----------------+
+1 row in set (0.00 sec)
+
+
+mysql> create table student (sname varchar(20), subject varchar(20));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into student values
+    -> ('harshika', 'maths'),
+    -> ('neha', 'english'),
+    -> ('satvika', 'physics'),
+    -> ('aniketh', 'chemistry'),
+    -> ('anuj', 'maths'),
+    -> ('preethi', 'english');
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----------+-----------+
+| sname    | subject   |
++----------+-----------+
+| harshika | maths     |
+| neha     | english   |
+| satvika  | physics   |
+| aniketh  | chemistry |
+| anuj     | maths     |
+| preethi  | english   |
++----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> create table faculty (fsubject varchar(20), fname varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into faculty values
+    -> ('sneha', 'chemistry'),
+    -> ('annie', 'english'),
+    -> ('koushik', 'maths'),
+    -> ('gauri', 'biology');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from faculty;
++----------+-----------+
+| fsubject | fname     |
++----------+-----------+
+| sneha    | chemistry |
+| annie    | english   |
+| koushik  | maths     |
+| gauri    | biology   |
++----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s left join faculty f on s.subject=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | koushik  |
+| neha     | annie    |
+| satvika  | NULL     |
+| aniketh  | sneha    |
+| anuj     | koushik  |
+| preethi  | annie    |
++----------+----------+
+6 rows in set (0.01 sec)
+
+mysql> select s.sname, f.fsubject from student s right join faculty f on s.subject=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| aniketh  | sneha    |
+| preethi  | annie    |
+| neha     | annie    |
+| anuj     | koushik  |
+| harshika | koushik  |
+| NULL     | gauri    |
++----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s inner join faculty f on s.subject=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | koushik  |
+| neha     | annie    |
+| aniketh  | sneha    |
+| anuj     | koushik  |
+| preethi  | annie    |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s join faculty f on s.subject=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | koushik  |
+| neha     | annie    |
+| aniketh  | sneha    |
+| anuj     | koushik  |
+| preethi  | annie    |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s full join faculty f on s.subject=f.fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full join faculty f on s.subject=f.fname' at line 1
+mysql> select s.sname, f.fsubject from student s outer join faculty f on s.subject=f.fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'outer join faculty f on s.subject=f.fname' at line 1
+mysql> select s.sname, f.fsubject from student s, faculty f where s.subject=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | koushik  |
+| neha     | annie    |
+| aniketh  | sneha    |
+| anuj     | koushik  |
+| preethi  | annie    |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s full join faculty f on s.subject=f.fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'full join faculty f on s.subject=f.fname' at line 1
+mysql> select s.sname, f.fsubject from student s left join faculty f on s.subject=f.fname union select s.sname, f.fsubject from student s right join faculty f on s.subject=f.fname
+    -> ;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | koushik  |
+| neha     | annie    |
+| satvika  | NULL     |
+| aniketh  | sneha    |
+| anuj     | koushik  |
+| preethi  | annie    |
+| NULL     | gauri    |
++----------+----------+
+7 rows in set (0.01 sec)
+
+mysql> select s.sname, f.fsubject from student s left join faculty f on s.subject!=f.fname;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | gauri    |
+| harshika | annie    |
+| harshika | sneha    |
+| neha     | gauri    |
+| neha     | koushik  |
+| neha     | sneha    |
+| satvika  | gauri    |
+| satvika  | koushik  |
+| satvika  | annie    |
+| satvika  | sneha    |
+| aniketh  | gauri    |
+| aniketh  | koushik  |
+| aniketh  | annie    |
+| anuj     | gauri    |
+| anuj     | annie    |
+| anuj     | sneha    |
+| preethi  | gauri    |
+| preethi  | koushik  |
+| preethi  | sneha    |
++----------+----------+
+19 rows in set (0.00 sec)
+
+mysql> select s.sname, f.fsubject from student s cross join faculty f;
++----------+----------+
+| sname    | fsubject |
++----------+----------+
+| harshika | gauri    |
+| harshika | koushik  |
+| harshika | annie    |
+| harshika | sneha    |
+| neha     | gauri    |
+| neha     | koushik  |
+| neha     | annie    |
+| neha     | sneha    |
+| satvika  | gauri    |
+| satvika  | koushik  |
+| satvika  | annie    |
+| satvika  | sneha    |
+| aniketh  | gauri    |
+| aniketh  | koushik  |
+| aniketh  | annie    |
+| aniketh  | sneha    |
+| anuj     | gauri    |
+| anuj     | koushik  |
+| anuj     | annie    |
+| anuj     | sneha    |
+| preethi  | gauri    |
+| preethi  | koushik  |
+| preethi  | annie    |
+| preethi  | sneha    |
++----------+----------+
+24 rows in set (0.00 sec)
